@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Full-stack to-do list app with Work and Personal lists",
   "main": "server/index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "install:all": "npm install && cd client && npm install",
-    "build": "cd client && npm run build",
+    "install:all": "npm install && npm install --prefix client",
+    "build": "npm run build --prefix client",
     "start": "node server/index.js",
     "dev:server": "node server/index.js",
-    "dev:client": "cd client && npm run dev"
+    "dev:client": "npm run dev --prefix client"
   },
   "dependencies": {
     "cors": "^2.8.5",
