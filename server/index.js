@@ -21,6 +21,12 @@ function isAuthed(req) {
 
 function requireAuth(req, res, next) {
   if (isAuthed(req)) return next();
+  // Auto-auth via token passed from launchpad
+  if (req.query.token && req.query.token === PW_HASH) {
+    res.setHeader('Set-Cookie', `${AUTH_COOKIE}=${PW_HASH}; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000`);
+    const clean = req.path === '/' ? '/' : req.path;
+    return res.redirect(clean);
+  }
   if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Unauthorized' });
   res.redirect('/login');
 }
